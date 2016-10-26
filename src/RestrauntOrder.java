@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 public class RestrauntOrder {
@@ -90,6 +91,8 @@ public class RestrauntOrder {
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 		menu.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.blue), "Menu",
 				TitledBorder.CENTER, TitledBorder.TOP));
+		JPanel menu_item = null;
+
 		DBItems dbItems = new DBItems();
 
 		goButton.addActionListener(new ActionListener() {
