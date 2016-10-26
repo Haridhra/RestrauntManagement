@@ -94,6 +94,7 @@ public class RestrauntOrder {
 		JPanel menu_item = null;
 
 		DBItems dbItems = new DBItems();
+		ArrayList<String> cart = new ArrayList();
 
 		goButton.addActionListener(new ActionListener() {
 
@@ -110,7 +111,7 @@ public class RestrauntOrder {
 				}
 				try {
 					loadMenuItems(window, cuisineSelectorPanel, menuPanel, containerPanel, filterPanel, scroll,
-							selectedRadioButton[0], menu, dbItems);
+							selectedRadioButton[0], menu, dbItems, cart);
 				} catch (SQLException exception) {
 					exception.printStackTrace();
 				}
@@ -118,13 +119,13 @@ public class RestrauntOrder {
 		});
 
 		loadMenuItems(window, cuisineSelectorPanel, menuPanel, containerPanel, filterPanel, scroll,
-				selectedRadioButton[0], menu, dbItems);
+				selectedRadioButton[0], menu, dbItems, cart);
 
 	}
 
 	private static void loadMenuItems(JFrame window, JPanel cuisineSelectorPanel, JPanel menuPanel,
 			JPanel containerPanel, JPanel filterPanel, JScrollPane scroll, String selectedRadioButton, JPanel menu,
-			DBItems dbItems) throws SQLException {
+			DBItems dbItems, ArrayList<String> cart) throws SQLException {
 
 		JPanel menu_item;
 		ArrayList<FoodItem> foodItems = null;
@@ -134,7 +135,7 @@ public class RestrauntOrder {
 		containerPanel.add(scroll);
 
 		foodItems = dbItems.getMenuFromDB(selectedRadioButton);
-		
+
 		for (FoodItem foodItem : foodItems) {
 			menu_item = new JPanel();
 			JLabel item = new JLabel(foodItem.getDishName());
@@ -160,6 +161,17 @@ public class RestrauntOrder {
 
 			JLabel totalCost = new JLabel(Integer.toString(totalPrice));
 			menu_item.add(totalCost);
+
+			JButton addToCart = new JButton("Order");
+			menu_item.add(addToCart);
+
+			addToCart.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					cart.add(item.getText());
+				}
+			});
 
 			menu_item.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 0));
 
@@ -203,7 +215,6 @@ public class RestrauntOrder {
 
 		cuisineSelectorPanel.add(filterPanel);
 		window.setVisible(true);
-
 	}
 
 }
